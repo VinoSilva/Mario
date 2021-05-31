@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour
     // Private variables
     private bool isGrounded = false;
 
+    [SerializeField]
+    private AudioClip jumpAudioClip = null;
+
     private void FixedUpdate()
     {
         Movement();
@@ -51,6 +54,7 @@ public class PlayerController : MonoBehaviour
     private void Jump()
     {
         rb.AddForce(Vector2.up * fJumpForce, ForceMode2D.Impulse);
+        SoundManager.Instance.PlayOneShot(jumpAudioClip);
     }
 
     private void Movement()
