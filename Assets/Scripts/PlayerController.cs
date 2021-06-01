@@ -19,17 +19,27 @@ public class PlayerController : MonoBehaviour
     private Animator animator = null;
 
     [Header("Movement Variables")]
-    [Range(1.0f, 1000.0f)]
+
+    // [SerializeField]
+    // private float fLerpSpeed = 0.0f;
+
+    [Range(1.0f,1000.0f)]
     [SerializeField]
-    private float fMoveSpeed = 1.0f;
+    private float fMaxSpeed = 1.0f;
 
     [Header("Jump Variables")]
     [SerializeField]
     [Range(0.0f, 10000.0f)]
     private float fJumpForce = 0.0f;
 
+
     [SerializeField]
-    [Range(0.10f,10.0f)]
+    [Tooltip("Time in seconds before the player will drop or can't press jump")]
+    [Range(0.0f,10.0f)]
+    private float fTimeToFall = 0.5f;
+
+    [SerializeField]
+    [Range(0.0f,10.0f)]
     private float fGroundSphereRadius = 0.0f;
 
     [SerializeField]
@@ -41,8 +51,20 @@ public class PlayerController : MonoBehaviour
     // Private variables
     private bool isGrounded = false;
 
+    private float fTargetSpeed = 0.0f;
+
+    private float fCurrentSpeed = 0.0f;
+
+    private float fFallTimer = 0.0f;
+
+    [Header("Sound Clips")]
+
     [SerializeField]
     private AudioClip jumpAudioClip = null;
+
+    private void Update() {
+        UpdateFallTimer();
+    }
 
     private void FixedUpdate()
     {
@@ -53,13 +75,32 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
+        rb.velocity = new Vector2(rb.velocity.x,0.0f);
         rb.AddForce(Vector2.up * fJumpForce, ForceMode2D.Impulse);
         SoundManager.Instance.PlayOneShot(jumpAudioClip);
     }
 
     private void Movement()
     {
-        rb.velocity = new Vector2(moveInput.normalized.x * fMoveSpeed * Time.fixedDeltaTime,rb.velocity.y);
+        // fCurrentSpeed = Mathf.Lerp(fCurrentSpeed,fTargetSpeed,Time.deltaTime * fLerpSpeed);
+
+        rb.velocity = new Vector2(fCurrentSpeed * Time.fixedDeltaTime,rb.velocity.y);
+
+        if(moveInput.x == 0.0f && fTargetSpeed == 0.0f && Mathf.Abs(fCurrentSpeed - fTargetSpeed) <= 0.5f){
+            animator.SetBool("isRun",false); 
+        }
+        else{
+            animator.SetBool("isRun",true); 
+        }
+    }
+
+    private void UpdateFallTimer(){
+        if(isGrounded){
+            fFallTimer = 0.0f;
+        }
+        else{
+            fFallTimer += Time.deltaTime;
+        }
     }
 
     private void OnMove(InputValue value)
@@ -70,14 +111,21 @@ public class PlayerController : MonoBehaviour
 
         if(isHorizontal){
             spriteRenderer.flipX = moveInput.x < 0.0f;
+
+            fTargetSpeed = moveInput.x * fMaxSpeed; 
+        }
+        else
+        {
+            fTargetSpeed = 0.0f;
         }
 
-        animator.SetBool("isRun",isHorizontal); 
+        fCurrentSpeed= fTargetSpeed;
     }
 
     private void OnJump(InputValue value)
     {
-        if(isGrounded){
+        if(isGrounded || fFallTimer <= fTimeToFall){
+            fFallTimer = fTimeToFall + Time.deltaTime;
             Jump();
         }
     }
