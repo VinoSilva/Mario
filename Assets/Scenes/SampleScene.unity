@@ -967,7 +967,7 @@ MonoBehaviour:
   fMaxSpeed: 150
   fJumpForce: 3.75
   fTimeToFall: 0.2
-  fGroundSphereRadius: 0.02
+  fGroundSphereRadius: 0.05
   groundMask:
     serializedVersion: 2
     m_Bits: 128

@@ -124,7 +124,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
-        if(isGrounded || fFallTimer <= fTimeToFall){
+        if((isGrounded || fFallTimer <= fTimeToFall) && rb.velocity.y <= 0.0f){
             fFallTimer = fTimeToFall + Time.deltaTime;
             Jump();
         }
