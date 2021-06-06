@@ -252,6 +252,8 @@ GameObject:
   - component: {fileID: 390298075}
   - component: {fileID: 2430897457479695521}
   - component: {fileID: 390298076}
+  - component: {fileID: 390298078}
+  - component: {fileID: 390298079}
   m_Layer: 5
   m_Name: ScoreMenu
   m_TagString: Untagged
@@ -312,6 +314,48 @@ MonoBehaviour:
       - m_Target: {fileID: 2430897457479695521}
         m_TargetAssemblyTypeName: ScoreMenuUI, Assembly-CSharp
         m_MethodName: OnScoreUpdated
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &390298078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390298074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9944d2cd003bae443adc6bd5a49b051d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerTxt: {fileID: 248158516}
+  timerVariable: {fileID: 11400000, guid: 8fec78bee73e2184b97dace8ee2f071d, type: 2}
+--- !u!114 &390298079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 390298074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68028227024e524b9242604009ceffd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: c704cba5077e0c142bd60819b7aa7b1b, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 390298078}
+        m_TargetAssemblyTypeName: TimerMenuUI, Assembly-CSharp
+        m_MethodName: OnTimerUpdated
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

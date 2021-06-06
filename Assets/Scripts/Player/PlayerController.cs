@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public enum MarioState {
+public enum MarioState
+{
     Locomotion,
     Crouch
 }
@@ -24,11 +25,9 @@ public class PlayerController : MonoBehaviour
     private Animator animator = null;
 
     [Header("Movement Variables")]
-
     // [SerializeField]
     // private float fLerpSpeed = 0.0f;
-
-    [Range(1.0f,1000.0f)]
+    [Range(1.0f, 1000.0f)]
     [SerializeField]
     private float fMaxSpeed = 1.0f;
 
@@ -37,14 +36,13 @@ public class PlayerController : MonoBehaviour
     [Range(0.0f, 10000.0f)]
     private float fJumpForce = 0.0f;
 
-
     [SerializeField]
     [Tooltip("Time in seconds before the player will drop or can't press jump")]
-    [Range(0.0f,10.0f)]
+    [Range(0.0f, 10.0f)]
     private float fTimeToFall = 0.5f;
 
     [SerializeField]
-    [Range(0.0f,10.0f)]
+    [Range(0.0f, 10.0f)]
     private float fGroundSphereRadius = 0.0f;
 
     [SerializeField]
@@ -63,7 +61,6 @@ public class PlayerController : MonoBehaviour
     private float fFallTimer = 0.0f;
 
     [Header("Sound Clips")]
-
     [SerializeField]
     private AudioClip jumpAudioClip = null;
 
@@ -89,7 +86,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float crouchYSize = 0.18f;
 
-    private void Update() {
+    private void Update()
+    {
         UpdateFallTimer();
     }
 
@@ -99,11 +97,11 @@ public class PlayerController : MonoBehaviour
         {
             case MarioState.Locomotion:
                 Movement();
-            break;
+                break;
             case MarioState.Crouch:
-            break;
+                break;
             default:
-            break;
+                break;
         }
 
         CheckIsGrounded();
@@ -111,30 +109,42 @@ public class PlayerController : MonoBehaviour
 
     private void Jump()
     {
-        rb.velocity = new Vector2(rb.velocity.x,0.0f);
+        rb.velocity = new Vector2(rb.velocity.x, 0.0f);
         rb.AddForce(Vector2.up * fJumpForce, ForceMode2D.Impulse);
-        ServiceLocator.instance.GetService<SoundManager>().PlayOneShot(jumpAudioClip);
+        ServiceLocator
+            .instance
+            .GetService<SoundManager>()
+            .PlayOneShot(jumpAudioClip);
     }
 
     private void Movement()
     {
         // fCurrentSpeed = Mathf.Lerp(fCurrentSpeed,fTargetSpeed,Time.deltaTime * fLerpSpeed);
+        rb.velocity =
+            new Vector2(fCurrentSpeed * Time.fixedDeltaTime, rb.velocity.y);
 
-        rb.velocity = new Vector2(fCurrentSpeed * Time.fixedDeltaTime,rb.velocity.y);
-
-        if(moveInput.x == 0.0f && fTargetSpeed == 0.0f && Mathf.Abs(fCurrentSpeed - fTargetSpeed) <= 0.5f){
-            animator.SetBool("isRun",false); 
+        if (
+            moveInput.x == 0.0f &&
+            fTargetSpeed == 0.0f &&
+            Mathf.Abs(fCurrentSpeed - fTargetSpeed) <= 0.5f
+        )
+        {
+            animator.SetBool("isRun", false);
         }
-        else{
-            animator.SetBool("isRun",true); 
+        else
+        {
+            animator.SetBool("isRun", true);
         }
     }
 
-    private void UpdateFallTimer(){
-        if(isGrounded){
+    private void UpdateFallTimer()
+    {
+        if (isGrounded)
+        {
             fFallTimer = 0.0f;
         }
-        else{
+        else
+        {
             fFallTimer += Time.deltaTime;
         }
     }
@@ -145,111 +155,141 @@ public class PlayerController : MonoBehaviour
 
         bool isHorizontal = moveInput.x != 0.0f;
 
-        if(isHorizontal){
+        if (isHorizontal)
+        {
             spriteRenderer.flipX = moveInput.x < 0.0f;
 
-            fTargetSpeed = moveInput.x * fMaxSpeed; 
+            fTargetSpeed = moveInput.x * fMaxSpeed;
         }
         else
         {
             fTargetSpeed = 0.0f;
         }
 
-        fCurrentSpeed= fTargetSpeed;
+        fCurrentSpeed = fTargetSpeed;
     }
 
     private void OnJump(InputValue value)
     {
-        if(isPaused.RuntimeValue){
-            return;
-        }
-        else if(currentState != MarioState.Locomotion){
-            return;
-        }
-
-        if((isGrounded || fFallTimer <= fTimeToFall) && rb.velocity.y <= 0.0f){
-            fFallTimer = fTimeToFall + Time.deltaTime;
-            Jump();
-        }
-    }
-
-    private void OnEscape(InputValue value){
-
-        if(isPaused.RuntimeValue){
-            resumeEvent.Raise();
-        }
-        else
-        {
-            pauseEvent.Raise();
-        }
-
-    }
-
-    private void OnCrouch(InputValue value){
         if(value.isPressed){
-            if(isPaused.RuntimeValue){
+            if (isPaused.RuntimeValue)
+            {
                 return;
             }
-            else if(moveInput.x != 0.0f){
+            else if (currentState != MarioState.Locomotion)
+            {
                 return;
             }
-            else if(!isGrounded){
+
+            if ((isGrounded || fFallTimer <= fTimeToFall) && rb.velocity.y <= 0.0f)
+            {
+                fFallTimer = fTimeToFall + Time.deltaTime;
+                Jump();
+            }
+        }
+    }
+
+    private void OnEscape(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            if (isPaused.RuntimeValue)
+            {
+                resumeEvent.Raise();
+            }
+            else
+            {
+                pauseEvent.Raise();
+            }
+        }
+    }
+
+    private void OnCrouch(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            if (isPaused.RuntimeValue)
+            {
+                return;
+            }
+            else if (moveInput.x != 0.0f)
+            {
+                return;
+            }
+            else if (!isGrounded)
+            {
                 return;
             }
 
             Vector3 newPosition = transform.position;
-            newPosition.y += (crouchYSize - defaultYSize)/2;
-            transform.position =  newPosition;
+            newPosition.y += (crouchYSize - defaultYSize) / 2;
+            transform.position = newPosition;
 
-            boxCollider2D.size = new Vector2(boxCollider2D.size.x,crouchYSize);
+            boxCollider2D.size = new Vector2(boxCollider2D.size.x, crouchYSize);
 
             currentState = MarioState.Crouch;
-            animator.SetBool("isCrouching",true);
+            animator.SetBool("isCrouching", true);
         }
-        else if(currentState == MarioState.Crouch)
+        else if (currentState == MarioState.Crouch)
         {
             Vector3 newPosition = transform.position;
-            newPosition.y += (defaultYSize - crouchYSize)/2;
-            transform.position =  newPosition;
+            newPosition.y += (defaultYSize - crouchYSize) / 2;
+            transform.position = newPosition;
 
-            boxCollider2D.size = new Vector2(boxCollider2D.size.x,defaultYSize);
+            boxCollider2D.size =
+                new Vector2(boxCollider2D.size.x, defaultYSize);
 
             currentState = MarioState.Locomotion;
-            animator.SetBool("isCrouching",false);
+            animator.SetBool("isCrouching", false);
         }
     }
 
-    private void CheckIsGrounded(){
+    private void CheckIsGrounded()
+    {
+        Vector3 checkPosition =
+            Vector3.down * boxCollider2D.size.y / 2 + transform.position;
 
-        Vector3 checkPosition = Vector3.down * boxCollider2D.size.y/2 + transform.position;
+        DebugExtension
+            .DebugWireSphere(checkPosition,
+            Color.red,
+            fGroundSphereRadius,
+            Time.deltaTime);
 
-        DebugExtension.DebugWireSphere(checkPosition,Color.red,fGroundSphereRadius,Time.deltaTime);
+        Collider2D[] colliders =
+            Physics2D
+                .OverlapCircleAll((Vector2) checkPosition,
+                fGroundSphereRadius,
+                groundMask);
 
-        Collider2D[] colliders = Physics2D.OverlapCircleAll((Vector2)checkPosition,fGroundSphereRadius,groundMask);
-
-        if(rb.velocity.y <= 0.0f){
-            if(colliders.Length > 0)
+        if (rb.velocity.y <= 0.0f)
+        {
+            if (colliders.Length > 0)
             {
                 isGrounded = true;
             }
-            else{
+            else
+            {
                 isGrounded = false;
             }
         }
-        else{
+        else
+        {
             isGrounded = false;
         }
 
-        animator.SetBool("isJump",!isGrounded);
+        animator.SetBool("isJump", !isGrounded);
     }
 
-    public void OnPause(){
+    public void OnPause()
+    {
         savedVelocity = rb.velocity;
+        rb.velocity = Vector2.zero;
         rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
-    public void OnResume(){
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation; 
+    public void OnResume()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         rb.velocity = savedVelocity;
     }
 }

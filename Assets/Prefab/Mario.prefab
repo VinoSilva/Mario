@@ -186,7 +186,7 @@ MonoBehaviour:
   animator: {fileID: 3089282198676907533}
   fMaxSpeed: 150
   fJumpForce: 3.75
-  fTimeToFall: 0.2
+  fTimeToFall: 0.1
   fGroundSphereRadius: 0.05
   groundMask:
     serializedVersion: 2
