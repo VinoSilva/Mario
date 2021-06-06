@@ -12,8 +12,8 @@ public class ScoreController : MonoBehaviour
     [SerializeField]
     private AudioClip scoreClip;
 
-    void OnJump(){
+    public void OnScore(int scoreToAdd){
         ServiceLocator.instance.GetService<SoundManager>().PlayOneShot(scoreClip);
-        ScoreChangeEvent.Raise(onScoreEvent,1000);
+        ScoreChangeEvent.Raise(onScoreEvent,scoreToAdd);
     }
 }
