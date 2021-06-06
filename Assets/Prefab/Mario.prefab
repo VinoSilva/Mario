@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 3089282198676907533}
   - component: {fileID: 815339341}
   - component: {fileID: 815339342}
+  - component: {fileID: 5509632072217599873}
   m_Layer: 6
   m_Name: Mario
   m_TagString: Untagged
@@ -269,3 +270,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &5509632072217599873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3089282198676907524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df5dba04985ea4c448a10d9e5b36a6c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onScoreEvent: {fileID: 11400000, guid: 9b0f53503cf354b4ba304cbc984f9c22, type: 2}
+  scoreClip: {fileID: 8300000, guid: 479c7d4d2fd6d4941bed34ee869ce230, type: 3}
