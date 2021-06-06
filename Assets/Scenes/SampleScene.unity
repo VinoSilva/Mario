@@ -157,6 +157,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!115 &171142209
+MonoScript:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: 
+  serializedVersion: 5
+  m_Script: 
+  m_DefaultReferences: {}
+  m_Icon: {fileID: 0}
+  m_ExecutionOrder: 0
+  m_ClassName: LockCameraY
+  m_Namespace: 
 --- !u!1 &334159092
 GameObject:
   m_ObjectHideFlags: 0
@@ -387,6 +401,7 @@ GameObject:
   m_Component:
   - component: {fileID: 939467284}
   - component: {fileID: 939467283}
+  - component: {fileID: 939467285}
   m_Layer: 0
   m_Name: Virtual Camera Cinemachine
   m_TagString: Untagged
@@ -423,7 +438,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7786561, y: 1}
+    m_SensorSize: {x: 1.7769376, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -440,13 +455,26 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 939467282}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.3904936, y: 1.0415416, z: -9.032513}
+  m_LocalPosition: {x: -1.3904936, y: 1, z: -9.032513}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1355125977}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &939467285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939467282}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 171142209}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_YPosition: 1
 --- !u!1 &1076477502
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,7 +767,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7504978307831487743, guid: 2709341c1d5d23a4dbfd427b0f235975, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.0415416
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7504978307831487743, guid: 2709341c1d5d23a4dbfd427b0f235975, type: 3}
       propertyPath: m_LocalPosition.z
@@ -792,7 +820,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3089282198676907521, guid: cce4cd3ee2a27ea4c9778f07af2c84e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5883417
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 3089282198676907521, guid: cce4cd3ee2a27ea4c9778f07af2c84e4, type: 3}
       propertyPath: m_LocalPosition.z
