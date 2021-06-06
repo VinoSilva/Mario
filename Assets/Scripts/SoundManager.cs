@@ -5,10 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
-    private static SoundManager _instance = null;
-
-    public static SoundManager Instance { get => _instance; private set => _instance = value; }
-
     [Header("Component references")]
     [SerializeField]
     private AudioSource audioSource = null;
@@ -16,17 +12,15 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(!_instance){
-            _instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else{
-            Destroy(this.gameObject);
-        }
+        ServiceLocator.instance.AddService<SoundManager>(this);
     }
 
     public void PlayOneShot(AudioClip audioClip)
     {
         audioSource.PlayOneShot(audioClip);
+    }
+
+    private void OnDestroy() {
+        ServiceLocator.instance.RemoveService<SoundManager>(this);
     }
 }

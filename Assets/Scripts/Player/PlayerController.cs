@@ -62,6 +62,17 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private AudioClip jumpAudioClip = null;
 
+    [Header("Game Event References")]
+    [SerializeField]
+    private GameEvent pauseEvent = null;
+
+    [SerializeField]
+    private GameEvent resumeEvent = null;
+
+    [Header("Scriptable Event Variables")]
+    [SerializeField]
+    private BoolVariable isPaused = null;
+
     private void Update() {
         UpdateFallTimer();
     }
@@ -77,7 +88,7 @@ public class PlayerController : MonoBehaviour
     {
         rb.velocity = new Vector2(rb.velocity.x,0.0f);
         rb.AddForce(Vector2.up * fJumpForce, ForceMode2D.Impulse);
-        SoundManager.Instance.PlayOneShot(jumpAudioClip);
+        ServiceLocator.instance.GetService<SoundManager>().PlayOneShot(jumpAudioClip);
     }
 
     private void Movement()
@@ -105,6 +116,10 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(InputValue value)
     {
+        if(isPaused.RuntimeValue){
+            return;
+        }
+
         moveInput = value.Get<Vector2>();
 
         bool isHorizontal = moveInput.x != 0.0f;
@@ -124,10 +139,26 @@ public class PlayerController : MonoBehaviour
 
     private void OnJump(InputValue value)
     {
+        if(isPaused.RuntimeValue){
+            return;
+        }
+
         if((isGrounded || fFallTimer <= fTimeToFall) && rb.velocity.y <= 0.0f){
             fFallTimer = fTimeToFall + Time.deltaTime;
             Jump();
         }
+    }
+
+    private void OnEscape(InputValue value){
+
+        if(isPaused.RuntimeValue){
+            resumeEvent.Raise();
+        }
+        else
+        {
+            pauseEvent.Raise();
+        }
+
     }
 
     private void CheckIsGrounded(){
