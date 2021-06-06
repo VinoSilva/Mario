@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private BoolVariable isPaused = null;
 
+    private Vector2 savedVelocity = Vector2.zero;
+
     private void Update() {
         UpdateFallTimer();
     }
@@ -116,10 +118,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(InputValue value)
     {
-        if(isPaused.RuntimeValue){
-            return;
-        }
-
         moveInput = value.Get<Vector2>();
 
         bool isHorizontal = moveInput.x != 0.0f;
@@ -183,5 +181,15 @@ public class PlayerController : MonoBehaviour
         }
 
         animator.SetBool("isJump",!isGrounded);
+    }
+
+    public void OnPause(){
+        savedVelocity = rb.velocity;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    public void OnResume(){
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation; 
+        rb.velocity = savedVelocity;
     }
 }

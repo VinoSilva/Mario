@@ -157,39 +157,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &326145177 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3729128985622425451, guid: 2b516e120d4691d4b9a7cd4337509215, type: 3}
-  m_PrefabInstance: {fileID: 3729128985373948914}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &326145180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 326145177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d68028227024e524b9242604009ceffd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 1c84051e99cced347af02d2619cac392, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1108729919}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &334159092
 GameObject:
   m_ObjectHideFlags: 0
@@ -590,11 +557,6 @@ Transform:
   m_Father: {fileID: 142604408}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1108729919 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3729128984265776077, guid: 2b516e120d4691d4b9a7cd4337509215, type: 3}
-  m_PrefabInstance: {fileID: 3729128985373948914}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1303811477
 GameObject:
   m_ObjectHideFlags: 0
@@ -1152,10 +1114,6 @@ PrefabInstance:
     - target: {fileID: 3729128983564805742, guid: 2b516e120d4691d4b9a7cd4337509215, type: 3}
       propertyPath: m_Name
       value: GameCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 3729128984265776077, guid: 2b516e120d4691d4b9a7cd4337509215, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b516e120d4691d4b9a7cd4337509215, type: 3}

@@ -10,12 +10,12 @@ public class GameManager : MonoBehaviour
 
     public void OnPause(){
         isPaused.RuntimeValue = true;
-        Time.timeScale = 0.0f;
+        // Time.timeScale = 0.0f;
     }
 
     public void OnResume(){
         isPaused.RuntimeValue = false;
-        Time.timeScale = 1.0f;
+        // Time.timeScale = 1.0f;
     }
 
 }

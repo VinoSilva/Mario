@@ -33,12 +33,12 @@ public class Navigation : MonoBehaviour
     }
 
     private void OnSelected(GameObject selectedGameObject){
-        Vector3 newPointerPosition = selectedGameObject.GetComponent<RectTransform>().localPosition;
 
+        RectTransform selectedRect = selectedGameObject.GetComponent<RectTransform>();
+        Vector3 newPointerPosition = selectedRect.localPosition;
         RectTransform pointerRect = pointerImage.GetComponent<RectTransform>();
 
-        newPointerPosition.x = pointerOffset.x;
-        newPointerPosition.y += pointerRect.rect.height/2;
+        newPointerPosition.x = selectedRect.localPosition.x - selectedRect.rect.width + pointerOffset.x;
 
         pointerImage.GetComponent<RectTransform>().localPosition  = newPointerPosition;
     }
