@@ -195,6 +195,8 @@ MonoBehaviour:
   pauseEvent: {fileID: 11400000, guid: 29ee642485a030549b9de47291b59c9a, type: 2}
   resumeEvent: {fileID: 11400000, guid: 1c84051e99cced347af02d2619cac392, type: 2}
   isPaused: {fileID: 11400000, guid: 8f26e93d632e6f346ac1badd7bd20ff0, type: 2}
+  defaultYSize: 0.23
+  crouchYSize: 0.16
 --- !u!95 &3089282198676907533
 Animator:
   serializedVersion: 3

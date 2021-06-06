@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public enum MarioState {
+    Locomotion,
+    Crouch
+}
+
 public class PlayerController : MonoBehaviour
 {
     [Header("Component references")]
@@ -75,13 +80,31 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 savedVelocity = Vector2.zero;
 
+    private MarioState currentState = MarioState.Locomotion;
+
+    [Header("Crouch Variables")]
+    [SerializeField]
+    private float defaultYSize = 0.23f;
+
+    [SerializeField]
+    private float crouchYSize = 0.18f;
+
     private void Update() {
         UpdateFallTimer();
     }
 
     private void FixedUpdate()
     {
-        Movement();
+        switch (currentState)
+        {
+            case MarioState.Locomotion:
+                Movement();
+            break;
+            case MarioState.Crouch:
+            break;
+            default:
+            break;
+        }
 
         CheckIsGrounded();
     }
@@ -140,6 +163,9 @@ public class PlayerController : MonoBehaviour
         if(isPaused.RuntimeValue){
             return;
         }
+        else if(currentState != MarioState.Locomotion){
+            return;
+        }
 
         if((isGrounded || fFallTimer <= fTimeToFall) && rb.velocity.y <= 0.0f){
             fFallTimer = fTimeToFall + Time.deltaTime;
@@ -157,6 +183,37 @@ public class PlayerController : MonoBehaviour
             pauseEvent.Raise();
         }
 
+    }
+
+    private void OnCrouch(InputValue value){
+        if(value.isPressed){
+            if(isPaused.RuntimeValue){
+                return;
+            }
+            else if(moveInput.x != 0.0f){
+                return;
+            }
+
+            Vector3 newPosition = transform.position;
+            newPosition.y += (crouchYSize - defaultYSize)/2;
+            transform.position =  newPosition;
+
+            boxCollider2D.size = new Vector2(boxCollider2D.size.x,crouchYSize);
+
+            currentState = MarioState.Crouch;
+            animator.SetBool("isCrouching",true);
+        }
+        else if(currentState == MarioState.Crouch)
+        {
+            Vector3 newPosition = transform.position;
+            newPosition.y += (defaultYSize - crouchYSize)/2;
+            transform.position =  newPosition;
+
+            boxCollider2D.size = new Vector2(boxCollider2D.size.x,defaultYSize);
+
+            currentState = MarioState.Locomotion;
+            animator.SetBool("isCrouching",false);
+        }
     }
 
     private void CheckIsGrounded(){
