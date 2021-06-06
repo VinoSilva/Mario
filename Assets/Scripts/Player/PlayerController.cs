@@ -193,6 +193,9 @@ public class PlayerController : MonoBehaviour
             else if(moveInput.x != 0.0f){
                 return;
             }
+            else if(!isGrounded){
+                return;
+            }
 
             Vector3 newPosition = transform.position;
             newPosition.y += (crouchYSize - defaultYSize)/2;

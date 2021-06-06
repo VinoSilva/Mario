@@ -827,20 +827,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3089282198676907523, guid: cce4cd3ee2a27ea4c9778f07af2c84e4, type: 3}
-      propertyPath: crouchYSize
-      value: 0.16
+      propertyPath: fTimeToFall
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3089282198676907524, guid: cce4cd3ee2a27ea4c9778f07af2c84e4, type: 3}
       propertyPath: m_Name
       value: Mario
-      objectReference: {fileID: 0}
-    - target: {fileID: 3089282198676907526, guid: cce4cd3ee2a27ea4c9778f07af2c84e4, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -1281953291003957293, guid: 53dd058b4c0b11a4ca9df7c22af7d3a5, type: 3}
-    - target: {fileID: 3089282198676907527, guid: cce4cd3ee2a27ea4c9778f07af2c84e4, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.18
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cce4cd3ee2a27ea4c9778f07af2c84e4, type: 3}
